@@ -36,4 +36,14 @@ export class AuthService {
 
   }
 
+  logout(): Observable<any> {
+    return this.http.post('/api/logout', null).pipe(shareReplay(), tap(() => this.subject.next(ANONYMOUS_USER)));
+  }
+
+  login(email: string, password: string) {
+    return this.http.post<User>('/api/login', { email, password }).pipe(
+      shareReplay(),
+      tap(user => this.subject.next(user)));
+  }
+
 }

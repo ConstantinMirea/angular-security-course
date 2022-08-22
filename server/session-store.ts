@@ -17,10 +17,14 @@ export class SessionStore {
   }
 
   isSessionValid(sessionId: string): boolean {
-    
+
     const session = this.sessions[sessionId];
 
     return session && session.isValid();
+  }
+
+  destroySession(sessionId: string): void {
+    delete this.sessions[sessionId];
   }
 
 }
