@@ -19,4 +19,10 @@ const RSA_PUBLIC_KEY = fs.readFileSync('./demos/public.key');
 
 const SESSION_DURATION = 240;
 
+ export async function decodeJwt(token:string){
+const payload = await jwt.verify(token, RSA_PUBLIC_KEY);
 
+console.log(payload);
+
+return payload;
+}

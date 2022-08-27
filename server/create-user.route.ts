@@ -32,12 +32,14 @@ async function createUserAndSession(res:Response, credentials) {
     const user = db.createUser(credentials.email, passwordDigest);
 
     // TODO replace with JWT
-    const sessionToken = 1;
+    const sessionToken = await createSessionToken(user.id.toString());
 
     res.cookie("SESSIONID", sessionToken, {httpOnly:true, secure:true});
 
     res.status(200).json({id:user.id, email:user.email});
 }
+
+
 
 
 

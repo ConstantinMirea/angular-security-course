@@ -9,6 +9,8 @@ import {createUser} from "./create-user.route";
 import {getUser} from "./get-user.route";
 import {logout} from "./logout.route";
 import {login} from "./login.route";
+import { retrieveUserIdFromRequest } from './get-user.middleware';
+import {checkIfAuthenticated} from "./auth.middleware"
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
@@ -16,6 +18,7 @@ const cookieParser = require('cookie-parser');
 const app: Application = express();
 
 app.use(cookieParser());
+app.use(retrieveUserIdFromRequest);
 app.use(bodyParser.json());
 
 
@@ -29,6 +32,8 @@ const options = commandLineArgs(optionDefinitions);
 
 
 // REST API
+
+//checkIfAuthenticated, this does not look good rechek it
 app.route('/api/lessons')
     .get(readAllLessons);
 
@@ -53,14 +58,14 @@ if (options.secure) {
     }, app);
 
     // launch an HTTPS Server. Note: this does NOT mean that the application is secure
-    httpsServer.listen(9000, () => console.log("HTTPS Secure Server running at https://localhost:" + httpsServer.address().port));
+    httpsServer.listen(9000, () => console.log("HTTPS Secure Server running at https://10.0.0.28:" + httpsServer.address().port));
 
 }
 else {
 
     // launch an HTTP Server
-    const httpServer = app.listen(9000, () => {
-        console.log("HTTP Server running at https://localhost:" + httpServer.address().port);
+    const httpServer = app.listen(9000,"10.0.0.28", () => {
+        console.log("HTTP Server running at https://10.0.0.28:" + httpServer.address().port);
     });
 
 }
