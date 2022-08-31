@@ -6,6 +6,7 @@ const util = require('util');
 const crypto = require('crypto');
 import * as jwt from 'jsonwebtoken';
 import * as fs from "fs";
+import * as argon2 from 'argon2';
 
 
 
@@ -19,7 +20,9 @@ const RSA_PUBLIC_KEY = fs.readFileSync('./demos/public.key');
 
 const SESSION_DURATION = 240;
 
+export  async function createSessionToken(userId:string){
 
+<<<<<<< HEAD
 export async function createSessionToken(userId:string) {
 return signJwt({}, RSA_PRIVATE_KEY,{algorithm: 'RS256', expiresIn:240, subject: userId})
 };
@@ -29,4 +32,24 @@ export async function decodeJwt(token: string) {
   const payload = await jwt.verify(token, RSA_PUBLIC_KEY);
   console.log("decoded JWT payload", payload);
   return payload;
+=======
+  return  signJwt({}, RSA_PRIVATE_KEY, {
+    algorithm:'RS256',
+    expiresIn:1000,
+    subject:userId,
+  },);
+}
+
+ export async function decodeJwt(token:string){
+const payload = await jwt.verify(token, RSA_PUBLIC_KEY);
+
+console.log(payload);
+
+return payload;
+}
+
+export async function createCsrfToken(sessionToken:string){
+//  return randomBytes(32).then(bytes => bytes.toString("hex"));
+return argon2.hash(sessionToken);
+>>>>>>> 26188b3ae2a32c9e6aa39afe2cf513235f7835a8
 }
