@@ -9,12 +9,13 @@ import {createUser} from "./create-user.route";
 import {getUser} from "./get-user.route";
 import {logout} from "./logout.route";
 import {login} from "./login.route";
+import { retrievedUserIdFromRequest } from './get-user.middleware';
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
 
 const app: Application = express();
-
+app.use(retrievedUserIdFromRequest)
 app.use(cookieParser());
 app.use(bodyParser.json());
 
