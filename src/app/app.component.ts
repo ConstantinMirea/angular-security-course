@@ -15,12 +15,13 @@ export class AppComponent  implements OnInit {
     }
 
     ngOnInit() {
-
+this.auth.retrieveAuthInfoFromUrl();
     }
 
     signUp() {
         this.auth.signUp();
     }
+
 
     login() {
         this.auth.login();
